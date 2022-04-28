@@ -6,6 +6,5 @@
 
 ### : (터미널에서) npm start
 
-### React JS
-
-### TailwindCSS
+-  React JS
+-  TailwindCSS
