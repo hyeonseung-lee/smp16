@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import AppRouter from "./Router";
 
 function App() {
+  const [userId, setUser] = useState();
+  const setUserId = (id) => {
+    setUser(id);
+  };
   return (
     <>
-      <AppRouter />
+      <AppRouter userId={userId} setUserId={setUserId} />
     </>
   );
 }

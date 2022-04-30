@@ -10,16 +10,16 @@ import {
   VictoryBar,
 } from "victory";
 
-export default function Profile() {
-  const id = "6268ecdc95f991d3319eeef9"; //pass from id
+export default function Profile({ userId, setUserId }) {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState();
+  // console.log(userId);
   const getUsers = async () => {
     const { data } = await axios.get(
-      `http://13.125.152.225:3000/api/users/${id}`
+      `http://13.125.152.225:3000/api/users/${userId}`
     );
     setUserData(data.data);
-    console.log(userData);
+    // console.log(userData);
     setIsLoading(false);
   };
 
@@ -29,7 +29,7 @@ export default function Profile() {
 
   return (
     <>
-      <NavBar />
+      <NavBar userId={userId} setUserId={setUserId} />
       {isLoading ? (
         <div>
           <h1>Loading....</h1>
@@ -44,7 +44,7 @@ export default function Profile() {
                     {userData.user.name}
                   </h2>
                   <dt className="font-medium text-7xl text-gray-900">
-                    {userData.user.power}
+                    {parseInt(userData.user.power)}
                   </dt>
                 </div>
                 <p className="mt-4 text-gray-500">{userData.user.email}</p>

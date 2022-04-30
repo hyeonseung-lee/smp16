@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "@material-tailwind/react/tailwind.css";
 import Progress from "@material-tailwind/react/Progress";
 import PaginationItem from "@material-tailwind/react/PaginationItem";
@@ -7,7 +7,7 @@ import Icon from "@material-tailwind/react/Icon";
 
 import axios from "axios";
 
-const SignIn = () => {
+const SignIn = ({ userId, setUserId }) => {
   const [item, setItem] = useState("");
   const [price, setPrice] = useState("");
   const [step, setStep] = useState(0);
@@ -16,7 +16,8 @@ const SignIn = () => {
   const [keyboard, setKeyboard] = useState([]);
   const [desktop, setDesktop] = useState([]);
   const [notebook, setNotebook] = useState([]);
-  const [sticker, setSticker] = useState([]);
+  const [sticker, setSticker] = useState(0);
+  const navigate = useNavigate();
   const items = [monitor, mouse, keyboard, desktop, notebook, sticker];
   const itemsInEng = [
     "monitor",
@@ -34,6 +35,9 @@ const SignIn = () => {
     "노트북",
     "스티커",
   ];
+  const {
+    state: { name, email },
+  } = useLocation();
   const changeHandler = (e) => {
     const value = e.target.value;
     const target = e.target.id;
@@ -50,7 +54,7 @@ const SignIn = () => {
 
   const onClickRight = (e) => {
     e.preventDefault();
-    if (step < itemsInEng.length - 1) {
+    if (step < itemsInEng.length) {
       setStep(step + 1);
     }
     switch (step) {
@@ -70,7 +74,7 @@ const SignIn = () => {
         setNotebook([item, price]);
         break;
       case 5:
-        setSticker([item, price]);
+        setSticker([price]);
         break;
     }
     setItem("");
@@ -84,13 +88,42 @@ const SignIn = () => {
   };
   const postUserData = () => {
     console.log(items);
+    console.log(
+      email,
+      name,
+      monitor[1],
+      keyboard[1],
+      mouse[1],
+      desktop[1],
+      notebook[1],
+      sticker[0]
+    );
+    const getCertNum = axios
+      .post("http://13.125.152.225:3000/api/users/signup", {
+        email: email,
+        name: name,
+        monitor: monitor[1],
+        keyboard: keyboard[1],
+        mouse: mouse[1],
+        desktop: desktop[1],
+        notebook: notebook[1],
+        sticker: sticker[0],
+      })
+      .then(function (response) {
+        console.log(response);
+        const id = response.data.data.id;
+        setUserId(id);
+        navigate("/profile");
+      })
+      .catch(function (error) {
+        console.log("error");
+        console.log(error);
+      });
   };
   const onClickSubmit = (e) => {
     e.preventDefault();
     setSticker(price);
-    setPrice("");
-    // api post
-    // navigete home
+    postUserData();
   };
   // useEffect(postUserData(), sticker);
   return (
@@ -113,7 +146,7 @@ const SignIn = () => {
               당신의 도구를 소개해주세요.
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-              이름 {"  -  "} 이메일@이메일.com
+              {name} {"  -  "} {email}
               {/* <Link
                 to="/aboutUs"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
@@ -127,7 +160,9 @@ const SignIn = () => {
               <a href="#" className="text-xl font-medium text-black">
                 {step < 5
                   ? `${itemsInKo[step]}는 어떤걸 쓰시나요?`
-                  : `${itemsInKo[step]}는 몇 개를 붙이셨나요?`}
+                  : step < 6
+                  ? `${itemsInKo[step]}는 몇 개를 붙이셨나요?`
+                  : "환영합니다!"}
               </a>
             </div>
             <input type="hidden" name="remember" defaultValue="true" />
@@ -177,7 +212,7 @@ const SignIn = () => {
                     />
                   </div>
                 </div>
-              ) : (
+              ) : step < 6 ? (
                 <div className="w-11/12 mr-2 rounded-md shadow-sm -space-y-px">
                   <div>
                     <label htmlFor="price" className="sr-only">
@@ -195,21 +230,21 @@ const SignIn = () => {
                       placeholder="갯수 (숫자만 입력해주세요.)"
                     />
                   </div>
+                </div>
+              ) : (
+                <div className="w-11/12 mr-2 rounded-md shadow-sm -space-y-px">
                   <div className="">
                     <button
                       type="submit"
                       className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      onClick={async (e) => {
-                        await onClickSubmit(e);
-                        await postUserData(e);
-                      }}
+                      onClick={onClickSubmit}
                     >
                       제출하기
                     </button>
                   </div>
                 </div>
               )}
-              {step < itemsInEng.length - 1 ? (
+              {step < itemsInEng.length ? (
                 <PaginationItem ripple="dark">
                   <button onClick={onClickRight}>
                     <Icon name="keyboard_arrow_right" />
@@ -221,7 +256,7 @@ const SignIn = () => {
             </div>
             <Progress
               color="blue"
-              value={parseInt(((step + 1) / itemsInEng.length) * 100)}
+              value={parseInt(((step + 1) / (itemsInEng.length + 1)) * 100)}
               percentage={false}
             />
           </form>

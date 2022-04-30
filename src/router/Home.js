@@ -5,7 +5,7 @@ import { usersApi } from "../api";
 import DevBanner from "../components/DevBanner";
 import NavBar from "../components/NavBar";
 
-const Home = () => {
+const Home = ({ userId, setUserId }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState();
   const getUsers = async () => {
@@ -18,11 +18,11 @@ const Home = () => {
     getUsers();
   }, []);
 
-  console.log(isLoading);
-  console.log(userData);
+  // console.log(isLoading);
+  // console.log(userData);
   return (
     <>
-      <NavBar />
+      <NavBar userId={userId} setUserId={setUserId} />
       <div className="w-full flex flex-col items-center">
         {isLoading ? (
           <div>

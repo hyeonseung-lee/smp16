@@ -39,11 +39,19 @@ export default function DevBanner({ userObj }) {
             Remote
           </div> */}
           <div className="mt-2 text-lg flex items-center text-gray-500">
-            <CurrencyDollarIcon
-              className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />
-            {userObj.power}
+            <svg
+              class="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            {parseInt(userObj.power)}
           </div>
           {/* <div className="mt-2 flex items-center text-sm text-gray-500">
             <CalendarIcon

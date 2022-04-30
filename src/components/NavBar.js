@@ -9,16 +9,17 @@ import NavbarCollapse from "@material-tailwind/react/NavbarCollapse";
 import Nav from "@material-tailwind/react/Nav";
 import NavItem from "@material-tailwind/react/NavItem";
 import NavLink from "@material-tailwind/react/NavLink";
+import "@material-tailwind/react/tailwind.css";
 
-const NavBar = () => {
+const NavBar = ({ userId, setUserId }) => {
   const [openNavbar, setOpenNavbar] = useState(false);
   const url = window.location.href.split("/")[4];
-  console.log(url);
+  // console.log(url);
   return (
     <Navbar color="lightBlue" navbar>
       <NavbarContainer>
         <NavbarWrapper>
-          <Link to="/">
+          <Link to={userId ? "/home" : "/"}>
             <img
               className="h-16 w-auto"
               src="https://sw-maestro.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe97f0af5-bb39-4ac6-9c41-fcbc96082cbf%2Flogo(250).png?table=block&id=d3ef903a-5073-43c9-be87-831ac7515b15&spaceId=461dcd9b-30d0-4f58-92fa-01a38636821b&width=250&userId=&cache=v2"
@@ -44,7 +45,21 @@ const NavBar = () => {
                 Profile
               </NavLink>
             </Link>
-            <NavItem ripple="light">Settings</NavItem>
+            <Link to="/">
+              <NavLink
+                onClick={() => {
+                  setUserId(NaN);
+                }}
+                ripple="light"
+              >
+                LogOut
+              </NavLink>
+            </Link>
+            <Link to="/aboutUs">
+              <NavLink active={url == "aboutUs" ? "light" : ""} ripple="light">
+                AboutUs
+              </NavLink>
+            </Link>
           </Nav>
         </NavbarCollapse>
       </NavbarContainer>
