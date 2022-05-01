@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/smp16/static/css/main.3fb15a80.css",
+    "main.js": "/smp16/static/js/main.0bbd7736.js",
+    "index.html": "/smp16/index.html",
+    "main.3fb15a80.css.map": "/smp16/static/css/main.3fb15a80.css.map",
+    "main.0bbd7736.js.map": "/smp16/static/js/main.0bbd7736.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3fb15a80.css",
+    "static/js/main.0bbd7736.js"
+  ]
+}
