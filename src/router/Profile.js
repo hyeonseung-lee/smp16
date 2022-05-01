@@ -16,7 +16,7 @@ export default function Profile({ userId, setUserId }) {
   // console.log(userId);
   const getUsers = async () => {
     const { data } = await axios.get(
-      `http://13.125.152.225:3000/api/users/${userId}`
+      `https://13.125.152.225:3000/api/users/${userId}`
     );
     setUserData(data.data);
     // console.log(userData);

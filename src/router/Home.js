@@ -9,7 +9,7 @@ const Home = ({ userId, setUserId }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState();
   const getUsers = async () => {
-    const { data } = await axios.get("http://13.125.152.225:3000/api/users");
+    const { data } = await axios.get("https://13.125.152.225:3000/api/users");
     setUserData(data.data);
     setIsLoading(false);
   };

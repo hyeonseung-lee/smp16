@@ -16,7 +16,7 @@ export default function UserDetail() {
   const [userData, setUserData] = useState();
   const getUsers = async () => {
     const { data } = await axios.get(
-      `http://13.125.152.225:3000/api/users/${id}`
+      `https://13.125.152.225:3000/api/users/${id}`
     );
     setUserData(data.data);
     console.log(userData);

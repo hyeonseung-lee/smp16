@@ -43,7 +43,7 @@ const Main = ({ userId, setUserId }) => {
       alert("이메일을 확인해주세요!");
     } else {
       const login = axios
-        .post("http://13.125.152.225:3000/api/users/login", {
+        .post("https://13.125.152.225:3000/api/users/login", {
           email: email,
           name: name,
         })
@@ -68,7 +68,7 @@ const Main = ({ userId, setUserId }) => {
   const sendCertEmailAndGetCertToken = async () => {
     console.log(email);
     const sendEmail = await axios
-      .post("http://13.125.152.225:3000/api/users/signup/send", {
+      .post("https://13.125.152.225:3000/api/users/signup/send", {
         email: email,
       })
       .then(function (response) {
@@ -85,7 +85,7 @@ const Main = ({ userId, setUserId }) => {
     e.preventDefault();
     console.log("checkCert", certNum);
     const getCertNum = axios
-      .post("http://13.125.152.225:3000/api/users/signup/chkToken", {
+      .post("https://13.125.152.225:3000/api/users/signup/chkToken", {
         email: email,
         token: certNum,
       })

@@ -99,7 +99,7 @@ const SignIn = ({ userId, setUserId }) => {
       sticker[0]
     );
     const getCertNum = axios
-      .post("http://13.125.152.225:3000/api/users/signup", {
+      .post("https://13.125.152.225:3000/api/users/signup", {
         email: email,
         name: name,
         monitor: monitor[1],
